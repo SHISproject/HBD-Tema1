@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Undangan Nasifa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <!-- Bootstrap CSS & Icon -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Font Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- Simply Countdown -->
+  <link rel="stylesheet" href="countdown/simplyCountdown.theme.default.css">
+  <script src="countdown/simplyCountdown.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <style>
+
+    body {
+        margin: 0;
+        font-family: 'Work Sans', sans-serif;
+        background-color: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+/*hero css*/
+    .hero {
+      width: 100%;
+      height: 100vh;
+      text-align: center;
+      background-image: url(img/1.jpg);
+      background-size: cover;
+      background-position: center;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    main {
+      width: 100%;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      font-family: "Sacramento", cursive;
+      color: #ff758c;
+    }
+
+    .hero h4 {
+      margin: 8px 0;
+      font-size: 1rem;
+      color: #f8f9fa;
+    }
+
+
+    img {
+      width: 120px;
+      margin: 16px 0;
+    }
+
+    .invitation-box {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 20px;
+      width: 80%; /* Mengatur lebar agar lebih kecil */
+      max-width: 300px; /* Maksimum lebar box */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .invitation-box h3 {
+      font-size: 25px;
+      color: #ff758c;
+      font-weight: bold;
+    }
+
+    .btn {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: white;
+      background-color: #ff758c;
+      box-shadow: 0 2px 2px rgba(0 0 0 / 0.2);
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      background-color: white;
+      color: #ff758c;
+    }
+
+
+/*kata css*/
+    .kata {
+        width: 100%;
+        background-color: #4169E1;
+    }
+
+    .kata h3 {
+        color: white;
+        font-size: 0.9rem;
+    }
+
+
+/*Home css*/
+    .home {
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        background-image: url(img/2.jpg);
+        background-size: cover;
+        background-position: center;
+        padding: 20px;
+        z-index: -1;
+    }
+
+    .home img {
+        max-width: 100%;
+        height: auto;
+        width: 200px; /* Atur lebar gambar */
+        margin-top: 30px;
+        margin-bottom: 30px;
+        object-fit: cover; /* Memastikan gambar proporsional */
+        border-radius: 0 20% 0 20%; /* Membuat sisi kanan terpotong */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan untuk estetika */
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+  
+    .home .text-center {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+
+    .home h2 {
+        color: #ff758c;
+        font-size: 2rem;
+        font-weight: bold;
+    }  
+
+    .home h3 {
+        font-size: 1rem;
+        margin: 2px 0;
+        color: white;
+    }
+
+
+    .home p {
+        font-size: 17px;
+        margin: 2px;
+        color: white;
+    }
+
+/*info css*/
+    #info {
+        background-image: url(img/3.jpg);
+        background-size: cover;
+        background-position: center;
+        padding: 50px 0;
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        
+    }
+
+/* Container layout */
+    .info .container {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+
+/* Heading "SAVE THE DATE" */
+    #info h2 {
+        font-size: 30px;
+        font-weight: bold;
+        margin-top: 120px;
+        color: #ff758c;
+    }
+
+/* Card styling */
+    #info .card {
+        width: 100%;
+        max-width: 380px; /* Ubah sesuai kebutuhan: 400px, 600px, dst */
+        margin: 20px auto; /* Biar card-nya selalu di tengah */
+        background-color: rgba(255, 255, 255, 0.8); /* Latar belakang card transparan */
+        border: none; /* Menghilangkan border */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sedikit bayangan untuk memberikan efek */
+        padding: 20px;
+    }
+  
+/* Judul di dalam card */
+    #info .card h1 {
+        font-size: 30px;
+        font-weight: 700;
+        color: #ff6b81;
+        margin-bottom: 8px;
+    }
+    
+/* Info item (tanggal, jam, lokasi) */    
+    #info .info-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    #info .info-item i {
+        font-size: 20px;
+        color: #ff6b81;
+        margin-right: 10px;
+    }
+
+ /* Styling untuk tombol */
+    #info .btn-outline-primary {
+        border-radius: 30px;
+        border-color: white;
+        color: white;
+        padding: 8px 20px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    /* Styling untuk ikon */
+    #info .btn-outline-primary i {
+        color: white; /* Warna ikon menjadi putih */
+    }
+
+    /* Efek hover untuk tombol */
+    #info .btn-outline-primary:hover {
+        background-color: #ff6b81; /* Latar belakang saat hover */
+        color: white;
+    }
+
+    /* Efek hover untuk ikon */
+    #info .btn-outline-primary:hover i {
+        color: white; /* Warna ikon tetap putih saat hover */
+    }
+
+/*galeri momen*/
+    .gallery {
+        width: 100%;
+        background-color:  #4169E1;
+        padding: 50px 0;
+        text-align: center;
+    }
+
+    .gallery h2 {
+        color: #ffb6c1;
+        font-weight: bold;
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    /* gambar besar */
+    .carousel-inner img {
+        height: 300px;
+        object-fit: cover;
+        box-shadow: none; /* Hilangkan shadow */
+        background-color: transparent; /* Pastikan background tidak ada */
+        padding: 0; /* Pastikan tidak ada padding */
+        margin: 0;
+    }
+
+    /* Thumbnail */
+    .thumb {
+        cursor: pointer;
+        transition: 0.3s;
+        border: none; /* Hilangkan border default */
+        padding: 0;
+        background-color: transparent;
+        box-shadow: none;
+        transition: 0.3s;
+        margin-top: 1px;
+    }
+
+    .thumb:hover {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+
+/*gift*/
+/* Birthday Gift Section */
+    .birthday-gift .container {
+        max-width: 400px;  /* Menetapkan lebar maksimum sesuai dengan tampilan lainnya */
+        width: 100%;
+    }
+
+    .birthday-gift {
+        width: 100%;
+        max-width: 400px;
+        background-color: #4169E1;
+        padding: 30px 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        color: #333;
+        margin: 0 auto;  /* Membuat elemen tetap berada di tengah */
+        border-top: 2px dashed #ff758c; /* garis putus2 putih di atas */
+        border-bottom: 2px dashed #ff758c; /* garis putus2 putih di atas */
+    }
+
+    .birthday-gift h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ffb6c1; /* pink lembut */
+    }
+
+    .birthday-gift p {
+        font-size: 15px;
+        margin-bottom: 0;
+        color: white;
+    }
+
+/* Gift Card Box */
+    .gift-card {
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 25px 20px;
+        margin-top: 25px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        margin: 0 auto;  /* Membuat elemen tetap berada di tengah */
+        width: 100%;  /* Membuat kartu hadiah lebih responsif */
+    }
+
+    /* Gift Icon */
+    .gift-icon {
+        width: 130px;
+        height: auto;
+        object-fit: contain;
+        max-width: 100%;
+    }
+
+    .solid-divider {
+        width: 100%;
+        max-width: 600px; /* batas maksimal panjang */
+        border-top: 2px solid #ffb6c1;
+    }
+
+    /* Alamat Teks */
+    .gift-card p {
+        color: #333;
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    /* Tombol Salin */
+    .gift-card .btn {
+        font-size: 14px;
+        padding: 6px 16px;
+        border-radius: 8px;
+        background-color: #ff758c;
+        color: #fff;
+        transition: 0.3s;
+    }
+
+    .gift-card .btn:hover {
+        background-color: #ffb6c1;
+    }
+
+/*rsvp*/
+
+    .rsvp {
+    background-color: #4169E1;
+    padding: 60px 20px;
+    max-width: 400px;
+    width: 100%;
+    border-bottom: 2px dashed #ff758c;
+    }
+
+    .rsvp h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #d582a8;
+    }
+
+    .rsvp p {
+    color: white;
+    font-size: 1rem;
+    }
+
+    .rsvp-form .form-control {
+    border-radius: 10px;
+    border: 1px solid #d582a8;
+    padding: 12px 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    }
+
+    .rsvp-form .form-control:focus {
+    border-color: #d582a8;
+    }
+
+    .rsvp-form .form-check-label {
+    font-weight: 500;
+    color: white;
+    }
+
+    .rsvp-form .btn {
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-color: wheat;
+    background-color: #d582a8;
+    color: white;
+    }
+
+    .rsvp-form .btn:hover {
+    background-color: white;
+    border-color: #d582a8;
+    color: #d582a8;
+    }
+
+/*ucapan & doa */
+    .ucapan-section {
+        background-color: #4169E1;
+        padding: 60px 20px;
+        margin: 0 auto;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .ucapan-section h2 {
+        color: #ff758c;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .ucapan-section form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .ucapan-section input,
+    .ucapan-section textarea {
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid #ff758c;
+    }
+
+    .ucapan-section textarea {
+    resize: none;
+    height: 100px;
+    }
+
+    .ucapan-section button {
+    border-color: wheat;
+    background-color: #ff758c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    }
+
+    .ucapan-section button:hover {
+    border: 1px solid #ff758c;
+    background-color: white;
+    border-color: #d582a8;
+    color: #d582a8;
+    }
+
+    #ucapanList .ucapan-item {
+    text-align: left;
+    background-color: #fff;
+    border-left: 4px solid #ff758c;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    border-color: #ff758c;
+    }
+
+    .ucapan-nama {
+    color: #ff758c;
+    font-weight: bold;
+    }
+
+    .ucapan-pesan {
+    margin: 0.5rem 0 0 0;
+    font-style: italic;
+    color: #ff758c;
+    }
+    
+    .ucapan-container {
+    max-height: 300px; /* kamu bisa atur tinggi sesuai kebutuhan */
+    overflow-y: auto;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    text-align: left;
+    }
+
+    #ucapanList {
+    margin-top: 20px;
+    max-height: 400px; /* Batasi tinggi maksimal, bisa disesuaikan */
+    overflow-y: auto; /* Tambahkan scroll vertikal otomatis jika konten lebih tinggi */
+    padding: 10px;
+    border: 1px solid #ff758c; /* Opsional: agar terlihat lebih jelas */
+    border-radius: 8px; /* Opsional: untuk membuat sudut lebih halus */
+    }
+
+    .ucapan-item {
+        margin-bottom: 10px; /* Beri jarak antar ucapan */
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Opsional: efek bayangan untuk setiap ucapan */
+    }
+
+/*akhir*/
+    .akhir {
+    background-color: #4169E1;
+    color: black;
+    font-family: 'Georgia', serif;
+    text-align: center;
+    padding: 60px 20px;
+    border-top: 2px dashed #f7cde2;
+    width: 100%;
+    max-width: 400px;
+    }
+
+    .akhir img {
+        max-width: 100%;
+        height: auto;
+        width: 200px; /* Atur lebar gambar */
+        margin-top: 30px;
+        margin-bottom: 30px;
+        object-fit: cover; /* Memastikan gambar proporsional */
+        border-radius: 0 20% 0 20%; /* Membuat sisi kanan terpotong */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan untuk estetika */
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .akhir p{
+    color: white;
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    }
+
+    .akhir h4{
+    font-size: 1rem;
+    margin: 20px 0;
+    color: #d582a8;
+    }
+    
+    .akhir h1 {
+    font-size: 48px;
+    margin: 20px 0;
+    color: #ff758c;
+    }
+
+    .akhir .footer {
+    margin-left: calc(-1 * var(--bs-gutter-x, 1.3rem));
+    margin-right: calc(-1 * var(--bs-gutter-x, 1.3rem));
+    padding: 20px 0;
+        background-color: white; /* Warna latar belakang */
+        color: #d582a8;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        border-top: 1px dashed #ff758c;
+        border-bottom: 1px dashed #ff758c;
+    }
+    
+
+    .akhir a {
+    color: #4169E1;
+    transition: color 0.3s ease;
+    }
+
+    .akhir a:hover {
+    color: #d582a8;
+    text-decoration: underline;
+    }
+
+/*audio*/
+    .audio-icon-wrapper {
+        /*mix-blend-mode: difference;*/
+        animation: rotating 4s linear infinite;
+        transform-origin: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 0;
+    }
+
+    .audio-icon-wrapper i.bi-disc {
+        animation: spin 4s linear infinite;
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.5rem;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        cursor: pointer;
+        color: #d582a8;
+        opacity: 0.5;
+    }
+    .audio-icon-wrapper i.bi-pause-circle {
+        animation: spin 4s linear infinite;
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.5rem;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        cursor: pointer;
+        color: #d582a8;
+        opacity: 0.5;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @media (min-width: 360px) {
+      #hero,
+      #kata,
+      #home,
+      #info,
+      #gallery,
+      #birthday-gift .container,
+      #rsvp,
+      #ucapan-section,
+      #akhir {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .simply-countdown > .simply-section {
+        padding: 40px;
+        margin: 2px;
+    }
+
+    .audio-icon-wrapper {
+        right: 1rem;
+        width: 3rem;
+        height: 3rem;
+        font-size: 3rem;
+    }
+    }
+
+    
+
+
+  </style>
+</head>
+<body>
+
+<!--hero-->
+    <section id="hero" class="hero d-flex justify-content-center align-items-center text-center">
+        <main>
+        <h4>YOU ARE INVITED</h4>
+        <h1>Nasifa</h1>
+        <h4>BIRTHDAY PARTY</h4>
+        <img src="img/pngwing.com.png" alt="birthday">
+        <div class="invitation-box">
+            <h4 data-aos="fade-up" data-aos-delay="1000"><strong>Kepada Yth.</strong></h4>
+            <h3 id="nama-tamu" class="mt-4"></h3> <!-- Tambahkan ini -->
+        </div>
+        <a href="#kata" class="btn btn-lg mt-4" onclick="enableScroll()">
+            <i class="bi bi-envelope-open"></i> Buka Undangan
+        </a>
+        </main>
+    </section>
+
+<!--kata mutiara-->
+    <section id="kata" class="kata">
+        <div class="text-center px-3 py-2">
+          <h3>"Seperti mutiara yang terindah di dasar lautan, bagi kami kamu adalah harta yang tak ternilai harganya. Kami sangat menyayangimu sayangku. Terima kasih sudah sayang sama adik-adik, sudah semakin mandiri dan pintar di sekolah. Sehat-sehat terus ya sayang, we love you forever!"</h3>
+        </div>
+      </section>
+
+<!--home-->
+    <section id="home" class="home">
+        <div class="text-center px-3">
+            <h3 style="margin-top: 60px;">Hi, teman-teman</h3>
+            <h3>Aku ingin mengundangmu teman-teman</h3>
+            <h3 style="margin-bottom: 40px;">Ke acara ulang tahunku yang ke 3 tahun</h3>
+            <img src="img/pp.jpg">
+            <h2>NASIFA</h2>
+            <p class="fade-in">Putri Dari</p>
+            <p class="fade-in">Bapak Lorem & Ibu Ipsum</p>
+          </div>
+    </section>
+
+<!--info-->
+    <section id="info" class="info">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2>SAVE THE DATE</h2>
+                    <div class="simply-countdown"></div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="card text-center p-3">
+            <div class="card-body">
+              <h1>Birthday Party</h1>
+              <div class="info-item d-flex align-items-center mb-3">
+                <i class="bi bi-calendar-week fs-4 me-2"></i>
+                <span>Minggu, 28 April 2025</span>
+              </div>
+          
+              <div class="info-item d-flex align-items-center mb-3">
+                <i class="bi bi-clock fs-4 me-2"></i>
+                <span>08:00 - 10:00</span>
+              </div>
+          
+              <div class="info-item d-flex align-items-center mb-3">
+                <i class="bi bi-geo-alt fs-4 me-2"></i>
+                <span>Hotel Claro</span>
+              </div>
+          
+              <!-- Tombol Lihat Lokasi -->
+              <div class="info-item d-flex justify-content-center">
+                <a href="#" class="btn btn-outline-primary btn-sm mt-2">
+                  <i class="bi bi-geo-alt me-1"></i> Lihat Lokasi
+                </a>
+              </div>
+            </div>
+          </div>          
+    </section>
+  
+<!--galeri momen-->
+    <section id="gallery" class="gallery py-5">
+        <div class="container">
+        <h2 class="text-center mb-5">Galeri Momen</h2>
+    
+        <!-- Gambar besar (Carousel) -->
+        <div id="mainCarousel" class="carousel slide mx-auto" data-bs-ride="carousel" style="max-width: 600px;">
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="img/galeri/4.jpg" class="d-block w-100" alt="Foto 1">
+            </div>
+            <div class="carousel-item">
+                <img src="img/galeri/2.jpg" class="d-block w-100" alt="Foto 2">
+            </div>
+            <div class="carousel-item">
+                <img src="img/galeri/3.jpg" class="d-block w-100" alt="Foto 3">
+            </div>
+            </div>
+        </div>
+    
+        <!-- Gambar kecil (Thumbnail) -->
+        <div class="row justify-content-center mt-3 gx-2" style="max-width: 600px; margin-inline: auto;">
+            <div class="col-4">
+            <img src="img/galeri/4.jpg" class="img-thumbnail thumb" data-bs-target="#mainCarousel" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
+            </div>
+            <div class="col-4">
+            <img src="img/galeri/2.jpg" class="img-thumbnail thumb" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2">
+            </div>
+            <div class="col-4">
+            <img src="img/galeri/3.jpg" class="img-thumbnail thumb" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3">
+            </div>
+        </div>
+        </div>
+    </section>
+
+<!--gift-->
+    <section class="birthday-gift py-5 text-center">
+        <div class="container">
+        <h2>Birthday Gift</h2>
+        <p>Bagi keluarga, sahabat dan teman-teman. <br>yang ingin memberikan hadiah dapat dikirim <br>ke alamat:</p>
+    
+        <div class="gift-card mx-auto mt-4 p-4">
+            <img src="img/gift.png" alt="Gift Icon" class="gift-icon mb-3">
+            <div class="solid-divider mx-auto my-3"></div>
+            <p class="mb-2 fw-bold">Jl. Lembah Dieng no 5,<br>Pisang Candi, Malang</p>
+            <button onclick="copyAddress()" class="btn btn-dark btn-sm">
+            <i class="bi bi-clipboard me-1"></i> Salin Alamat
+            </button>
+        </div>
+        </div>
+    </section>
+     
+<!--rsvp-->
+    <section class="rsvp text-center py-5" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="mb-3">RSVP</h2>
+        <p class="mb-4"><em>Bantu kami untuk mempersiapkan acara lebih baik dengan mengisi form konfirmasi kehadiran di bawah</em></p>
+        
+        <!-- Tambahkan onsubmit di sini -->
+        <form class="rsvp-form mx-auto" style="max-width: 500px;" onsubmit="return sendToWhatsApp()">
+        <div class="mb-3" data-aos="fade-left" data-aos-duration="800">
+            <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap" name="nama" required>
+        </div>
+        <div class="mb-3" data-aos="fade-left" data-aos-duration="800">
+            <input type="number" class="form-control" placeholder="Jumlah Tamu" name="jumlah" min="1" required>
+        </div>
+        <div class="mb-3 text-start" data-aos="zoom-in" data-aos-duration="1000">
+            <label class="form-label d-block mb-2" style="color: #ff758c;">Konfirmasi Kehadiran</label>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" id="hadir" name="konfirmasi" value="hadir" required>
+        <label class="form-check-label" for="hadir">Ya, Saya Akan Hadir</label>
+         </div>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" id="tidak" name="konfirmasi" value="tidak">
+        <label class="form-check-label" for="tidak">Tidak, Maaf Saya Tidak Bisa Hadir</label>
+    </div>
+        </div>
+
+    <!-- Tetap gunakan type="submit" karena kita handle lewat onsubmit -->
+    <button type="submit" class="btn btn-dark w-100" data-aos="fade-up" data-aos-duration="1000">Kirim</button>
+    </form>
+    </section>
+
+<!--doa & ucapan-->
+    <section class="ucapan-section text-center" data-aos="fade-up">
+        <h2>Ucapan & Doa</h2>
+    
+        <form onsubmit="kirimUcapan(event)">
+        <input type="text" class="form-control" id="nama1" placeholder="Nama kamu" name="nama" required>
+        
+        <textarea id="pesan" placeholder="Ucapan / doa" required></textarea>
+        <button type="submit">Kirim</button>
+        </form>
+    
+        <!-- Container untuk list ucapan -->
+        <div id="ucapanList" style="margin-top:20px; max-height: 400px; overflow-y: auto;"></div>
+    </section>
+
+<!--akhir-->
+    <section class="akhir">
+        <img src="img/pp.jpg">
+        <p>Kehadiran teman-teman sangat berarti bagiku, <br>ku tunggu kehadiran-Nya.</p>
+        <h4>With Love</h4>
+        <h1>Nasifa</h1>
+      
+  
+        <div class="footer mt-5">
+          Created With Love By Shis<br>
+          Facebook : <a href="https://facebook.com/Shis" class=" text-decoration-none">@shis</a>
+        </div>
+      
+      </section>
+
+<!--audio-->
+    <div id="audio-container">
+        <!-- 🎵 Audio yang akan diputar -->
+        <audio id="song" loop>
+        <source src="audio/hbd.mp3" type="audio/mp3">
+        </audio>
+
+        <!-- 🔊 Tombol ikon untuk play/pause musik -->
+        <div class="audio-icon-wrapper" style="display: none;">
+        <i class="bi bi-disc"></i>
+        </div>
+    </div>
+
+
+<!--js hero nama undangan-->
+    <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+  
+    const namaTamu = getQueryParam('to');
+    const namaTamuElem = document.getElementById('nama-tamu');
+  
+    if (namaTamu && namaTamuElem) {
+      const decodedName = decodeURIComponent(namaTamu).replace(/\+/g, ' ');
+      namaTamuElem.textContent = `Kepada Yth. ${decodedName}`;
+    }
+  </script>
+
+<!--countdown-->
+    <script>
+        simplyCountdown('.simply-countdown',{
+        year: 2025, // Target year (required)
+        month: 4, // Target month [1-12] (required)
+        day: 28, // Target day [1-31] (required)
+        hours: 0, // Target hour [0-23], default: 0
+        words: { // Custom labels, with lambda for plurals
+            days: { singular: 'hari', plural: 'hari' },
+            hours: { singular: 'jam', plural: 'jam' },
+            minutes: { singular: 'menit', plural: 'menit' },
+            seconds: { singular: 'detik', plural: 'detik' }},
+        });
+    </script>
+
+<!--js salin text-->
+<script>
+    function copyAddress() {
+      const alamat = "Jl. Lembah Dieng no 5, Pisang Candi, Malang";
+      navigator.clipboard.writeText(alamat).then(function () {
+        const button = document.querySelector(".birthday-gift button");
+        const originalText = button.innerHTML;
+  
+        button.innerHTML = '<i class="bi bi-check-circle me-1"></i> Disalin!';
+        button.disabled = true;
+  
+        setTimeout(() => {
+          button.innerHTML = originalText;
+          button.disabled = false;
+        }, 1200);
+      }).catch(function (err) {
+        alert("Gagal menyalin alamat: " + err);
+      });
+    }
+  </script>
+  
+<!--js audio-->
+    <script>
+        const rootElement = document.querySelector(":root");
+        const audioIconWrapper =document.querySelector('.audio-icon-wrapper');
+        const audioIcon = document.querySelector('.audio-icon-wrapper i');
+        const song = document.querySelector('#song');
+        let isPlaying = false;
+
+        function disableScroll() {
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+
+        window.onscroll = function () {
+            window.scrollTo(scrollTop, scrollLeft);
+        }
+        
+        rootElement.style.scrollBehavior = 'auto';
+        }
+
+        function enableScroll() {
+            window.onscroll = function () { };
+            rootElement.style.scrollBehavior = 'smooth';
+            //localStorage.setItem('opened', 'true');
+            PlayAudio();
+        }
+
+        function PlayAudio() {
+            song.volume = 0.5;
+            audioIconWrapper.style.display = 'flex';
+            song.play();
+            isPlaying= true;
+        }
+
+        audioIconWrapper.onclick = function() {
+            if (isPlaying) {
+            song.pause();
+            audioIcon.classList.remove('bi-disc');
+            audioIcon.classList.add('bi-pause-circle');
+            } else {
+            song.play();
+            audioIcon.classList.add('bi-disc');
+            audioIcon.classList.remove('bi-pause-circle');
+            }
+
+            isPlaying = !isPlaying;
+        }
+
+    // if(!localStorage.getItem('opened')) {
+    // disableScroll();
+    //  }
+    disableScroll();
+        
+    </script>
+
+<!--rsvp-->
+    <script>
+        // Fungsi WhatsApp kamu tetap di sini
+        function sendToWhatsApp() {
+            const nama = document.querySelector('[name="nama"]').value;
+            const jumlah = document.querySelector('[name="jumlah"]').value;
+            const konfirmasi = document.querySelector('[name="konfirmasi"]:checked')?.value;
+      
+            if (!nama || !jumlah || !konfirmasi) {
+                alert("Mohon lengkapi semua data sebelum mengirim.");
+                return false;
+            }
+      
+            const pesan = `*Konfirmasi Kehadiran*\nNama: ${nama}\nJumlah Tamu: ${jumlah}\nKehadiran: ${konfirmasi}`;
+            const url = `https://wa.me/6285756050801?text=${encodeURIComponent(pesan)}`;
+      
+            window.open(url, '_blank');
+            return false; // agar form tidak reload
+        }
+      
+        // Tambahan ini untuk ambil nama dari URL & tampilkan
+        window.addEventListener('DOMContentLoaded', () => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const nama = urlParams.get('to');
+      
+          if (nama) {
+            const namaTamu = decodeURIComponent(nama.replace(/\+/g, ' '));
+            const namaTamuSpan = document.getElementById('nama-tamu');
+            const inputNama = document.querySelector('[name="nama"]');
+      
+            if (namaTamuSpan) namaTamuSpan.textContent = namaTamu;
+            if (inputNama) inputNama.value = namaTamu;
+          }
+        });
+    </script>
+      
+<!--ucapan & doa-->
+<script>
+    // Fungsi untuk mengambil parameter dari URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const namaUndangan = getQueryParam('to'); // Ambil parameter 'to' dari URL
+        const inputNama = document.getElementById("nama1"); // ID input nama
+
+        // Jika ada nama tamu di URL, langsung set di kolom input
+        if (namaUndangan && inputNama) {
+            const decodedName = decodeURIComponent(namaUndangan).replace(/\+/g, ' ');
+            inputNama.value = decodedName; // Set nilai input nama
+        }
+    });
+
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8UpYNtIh1_FgTmr-aer1BCsdppu5DYc8",
+        authDomain: "shis-project-a036a.firebaseapp.com",
+        databaseURL: "https://shis-project-a036a-default-rtdb.firebaseio.com",
+        projectId: "shis-project-a036a",
+        storageBucket: "shis-project-a036a.firebasestorage.app",
+        messagingSenderId: "394958286014",
+        appId: "1:394958286014:web:d0807b59422452a78302ef"
+    };
+
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Kirim ucapan tanpa menambahkan "Untuk" dan nama tamu
+    function kirimUcapan(event) {
+        event.preventDefault();
+
+        // Ambil nama tamu dan pesan dari form
+        const nama = document.getElementById("nama1").value.trim(); // Nama dari input
+        const pesan = document.getElementById("pesan").value.trim();
+
+        // Kirim pesan tanpa menambahkan nama tamu di dalam pesan
+        if (nama && pesan) {
+            const newUcapan = {
+                nama: nama,
+                pesan: pesan, // Tidak perlu menambahkan nama tamu di pesan
+                waktu: new Date().toISOString()
+            };
+
+            // Kirim data ucapan ke Firebase
+            database.ref("ucapan").push(newUcapan)
+                .then(() => {
+                    console.log("Ucapan berhasil dikirim");
+                    // Reset hanya pesan, bukan nama
+                    document.getElementById("pesan").value = "";
+                })
+                .catch((error) => {
+                    console.error("Gagal mengirim ucapan: ", error);
+                });
+        } else {
+            alert("Nama dan pesan harus diisi!");
+        }
+    }
+
+    // Tampilkan ucapan secara realtime
+    const ucapanList = document.getElementById("ucapanList");
+    database.ref("ucapan").on("child_added", function(snapshot) {
+        const data = snapshot.val();
+        const ucapanItem = document.createElement("div");
+        ucapanItem.className = "ucapan-item";
+        ucapanItem.innerHTML = `<strong>${data.nama}</strong><p>${data.pesan}</p>`;
+        ucapanList.prepend(ucapanItem);
+    });
+</script>
+
+
+
+<!--AOS-->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+</body>
+</html>
